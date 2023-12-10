@@ -1,0 +1,163 @@
+#+STARTUP: inlineimages
+
+* Use Cases
+
+** User and Roles
+#+begin_src plantuml :file images/users.png :eval no-export :cmdline -charset utf-8
+@startuml
+left to right direction
+actor "user" as user
+actor "admin" as admin
+
+package User {
+   usecase "Login" as login
+   usecase "Logout" as logout
+   usecase "Change Password" as chgpwd
+   usecase "Build Menus" as buildmenu
+   usecase "New User" as newuser
+   usecase "Del User" as deluser
+
+   usecase "New Role" as newrole
+   usecase "Del Role" as delrole
+
+   usecase "New Tran Role" as newtranrole
+   usecase "Del Tran Role" as deltranrole
+
+   usecase "New User Role" as newuserrole
+   usecase "Del User Role" as deluserrole
+
+}
+
+user --> login
+user --> logout
+user --> chgpwd
+user --> buildmenu
+
+admin --> newuser
+admin --> deluser
+admin --> newrole
+admin --> delrole
+admin --> newtranrole
+admin --> deltranrole
+admin --> newuserrole
+admin --> deluserrole
+
+@enduml
+#+end_src
+
+#+RESULTS:
+[[file:images/users.png]]
+
+** 行政管理
+#+begin_src plantuml :file images/ucmng.png :eval no-export :cmdline -charset utf-8
+@startuml
+left to right direction
+actor "员工" as emp
+actor "行政管理" as cmng
+actor "行政经理" as mng
+
+package 行政人力 {
+   usecase "报工" as reportwork
+   usecase "报工审批" as approvework
+
+   usecase "入职申请" as onboarding
+   usecase "入职审批" as onboardapprove
+   usecase "离职申请" as resignapply
+   usecase "离职审批" as resignapprove
+
+   usecase "休假申请" as leaveapply
+   usecase "休假审批" as leaveapprove
+
+   usecase "修改员工信息" as modifyemp
+}
+
+emp --> reportwork
+cmng --> approvework
+emp --> onboarding
+emp --> resignapply
+emp --> leaveapply
+
+cmng --> onboardapprove
+cmng --> resignapprove
+
+mng --> leaveapprove
+mng --> modifyemp
+@enduml
+#+end_src
+
+#+RESULTS:
+[[file:images/ucmng.png]]
+
+
+** 财务
+
+#+begin_src plantuml :file images/ucacc.png :eval no-export :cmdline -charset utf-8
+@startuml
+left to right direction
+actor "员工" as emp
+actor "会计" as acc
+actor "出纳" as cashier
+
+package 财务 {
+    usecase "报销申请" as reimburse
+    usecase "报销审批" as rbapprove
+
+    usecase "开票申请" as invoiceapply
+    usecase "开票审批" as invoiceapprove
+
+    usecase "入账" as deposit
+
+    usecase "出帐申请" as withdrawapply
+    usecase "出帐审批" as withdrawapprove
+    usecase "补登发票" as invoicein
+
+    usecase "对账" as reconciliation
+}
+
+emp --> reimburse
+cashier --> rbapprove
+
+acc --> invoiceapply
+cashier --> invoiceapprove
+
+acc --> deposit
+cashier --> withdrawapply
+
+acc --> invoicein
+
+acc --> withdrawapprove
+acc --> reconciliation
+
+@enduml
+#+end_src
+
+#+RESULTS:
+[[file:images/ucacc.png]]
+
+** 销售
+#+begin_src plantuml :file images/ucsales.png :eval no-export :cmdline -charset utf-8
+@startuml
+left to right direction
+actor "销售" as sales
+actor "采购" as purchase
+
+package 合同 {
+   usecase "销售合同签署" as salesinput
+   usecase "销售合同审批" as salesapprove
+   usecase "采购合同签署" as purchaseinput
+   usecase "采购合同审批" as purchaseapprove
+}
+
+sales --> salesinput
+purchase --> salesapprove
+
+sales --> purchaseapprove
+purchase --> purchaseinput
+
+@enduml
+#+end_src
+
+#+RESULTS:
+[[file:images/ucsales.png]]
+
+

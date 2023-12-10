@@ -1,0 +1,152 @@
+#+STARTUP: inlineimages
+
+* Activities
+
+** 行政管理
+*** 入职申请
+#+begin_src plantuml :file images/onboard.png :eval no-export :cmdline -charset utf-8
+start
+:validate email;
+if (not validate) then (yes)
+  stop
+endif
+:input info;
+:save;
+end
+#+end_src
+
+#+RESULTS:
+[[file:images/onboard.png]]
+
+*** 入职审批
+#+begin_src plantuml :file images/onboardapprove.png :eval no-export :cmdline -charset utf-8
+start
+:load info;
+:show info;
+if (is ok?) then (yes)
+   :click approve;
+else
+   :click reject;
+   note right: input reason
+endif
+end
+#+end_src
+
+#+RESULTS:
+[[file:images/onboardapprove.png]]
+
+*** 报工
+#+begin_src plantuml :file images/reportwork.png :eval no-export :cmdline -charset utf-8
+@startuml
+start
+
+:input work date;
+if (report not exists) then (yes)
+:load data;
+else (no)
+:clear fields;
+endif
+:edit reports;
+note right: use table crud
+:save reports;
+
+end
+@enduml
+#+end_src
+
+#+RESULTS:
+[[file:images/reportwork.png]]
+
+*** 报工审批
+#+begin_src plantuml :file images/reportapprove.png :eval no-export :cmdline -charset utf-8
+@startuml
+start
+:input work date;
+:show the reports;
+if (is ok?) then (yes)
+:click approve;
+else
+:click reject;
+note right: input reason
+endif
+end
+@enduml
+#+end_src
+
+#+RESULTS:
+[[file:images/reportapprove.png]]
+
+
+*** 休假申请
+#+begin_src plantuml :file images/leaveapply.png :eval no-export :cmdline -charset utf-8
+start
+:input period and reason;
+:caculate remain vacation days;
+if (remain days < 0) then (yes)
+   :show attention;
+endif
+:save;
+end
+#+end_src
+
+#+RESULTS:
+[[file:images/leaveapply.png]]
+
+*** 休假审批
+#+begin_src plantuml :file images/leaveapprove.png :eval no-export :cmdline -charset utf-8
+start
+:get leave list;
+:click item;
+:show leave info;
+:caculate remain vacation days;
+if (remain days <= 0?) then (yes)
+   :show attention;
+endif
+if (is approved) then (yes)
+   :click approved;
+else
+   :click rejected;
+endif
+end
+#+end_src
+
+#+RESULTS:
+[[file:images/leaveapprove.png]]
+
+
+** 财务管理
+*** 报销申请
+#+begin_src plantuml :file images/reimburse.png :eval no-export :cmdline -charset utf-8
+start
+:input total amount and count;
+:input reimburse details;
+note right :**CRUD** time, reason, invoice(optional)
+:caculate total;
+:save;
+end
+#+end_src
+
+#+RESULTS:
+[[file:images/reimburse.png]]
+
+
+*** 报销审批
+#+begin_src plantuml :file images/reimapprove.png :eval no-export :cmdline -charset utf-8
+start
+:get reimburse list;
+note right: name, applydate, total amount
+:click item;
+:show details;
+if (approved?) then (yes)
+   :click approved;
+else
+   :click rejected;
+   note right: input reason
+endif
+end
+#+end_src
+
+#+RESULTS:
+[[file:images/reimapprove.png]]
+
+** 业务管理
