@@ -13,9 +13,32 @@ services:
       POSTGRES_PASSWORD: example
       POSTGRES_USER: ems
       POSTGRES_DB: emsdb
+    networks:
+      - ems-network
   
   adminer:
     image: adminer
     restart: always
+    depends_on:
+      - db
     ports:
       - 8082:8080
+    networks:
+      - ems-network
+
+  keycloak:
+    depends_on:
+      - db
+    image: jboss/keycloak
+    restart: always
+    container_name: local_keycloak
+    ports:
+      - 8083:8080
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    networks:
+      - ems-network
+
+networks:
+  ems-network:

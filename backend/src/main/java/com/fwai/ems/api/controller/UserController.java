@@ -1,7 +1,6 @@
 package com.fwai.ems.api.controller;
 
 import com.fwai.ems.api.dto.UserRequestDto;
-import com.fwai.ems.service.UserService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +28,7 @@ public class UserController {
 		}
 
 		@GetMapping(value = "/{id}")
-		public ResponseEntity<UserRequestDto> getUserById(@PathVariable Long id) {
+		public ResponseEntity<UserRequestDto> getUserById(@PathVariable Integer id) {
 				logger.info("getUserById");
 				UserRequestDto userRequestDto = userService.getUserDtoById(id);
 				logger.debug("get dto");
